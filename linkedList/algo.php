@@ -47,7 +47,27 @@ function checkHuiwen($list) {
     if($list->length <= 1) {
         return true;
     }
-
+    $preNode = $nextNode = null;
+    $fast = $slow = $list->head->next;//快慢指针
+    while($fast != null && $fast->next != null) {
+        $fast = $fast->next->next;
+        //对慢的进行翻转
+        $nextNode = $slow->next;
+        $slow->next = $preNode;
+        $preNode = $slow;
+        $slow = $nextNode;
+    }
+    if($fast != null) {
+        $slow = $slow->next;
+    }
+    while($slow != null) {
+        if($slow->data !== $preNode->data) {
+            return false;
+        }
+        $slow = $slow->next;
+        $preNode = $preNode->next;
+    }
+    return true;
 }
 
 //======================TEST================================
@@ -55,8 +75,11 @@ $list = new SingleLinkedList();
 $list->insertFoot(1);
 $list->insertFoot(2);
 $list->insertFoot(3);
-$list->insertFoot(4);
-$list->insertFoot(5);
+$list->insertFoot(3);
+$list->insertFoot(2);
+$list->insertFoot(1);
+$check = checkHuiwen($list);
+var_dump($check);exit;
 //反转链表
 reverse($list);
 //制造一个有环链表
