@@ -103,6 +103,21 @@ function mergeSortedList($listA, $listB) {
     return $newList;
 }
 
+/**
+ *寻找中间节点
+ */
+function findMiddle($list) {
+    if($list == null || $list->head == null || $list->head->next == null) {
+        return false;
+    }
+    $slow = $fast = $list->head->next;
+    while($fast != null && $fast->next != null) {
+        $fast = $fast->next->next;
+        $slow = $slow->next;
+    }
+    return $slow;
+}
+
 //======================TEST================================
 $list = new SingleLinkedList();
 $list1 = new SingleLinkedList();
@@ -112,6 +127,7 @@ $list1->insertFoot(6);
 $list->insertFoot(1);
 $list->insertFoot(3);
 $list->insertFoot(5);
+var_dump(findMiddle($list));exit;
 $newList = mergeSortedList($list, $list1);
 var_dump($newList);exit;
 $check = checkHuiwen($list);
