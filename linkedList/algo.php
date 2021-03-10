@@ -70,14 +70,50 @@ function checkHuiwen($list) {
     return true;
 }
 
+/**
+ *合并两个有序链表
+ */
+function mergeSortedList($listA, $listB) {
+    if($listA == null && $listB == null) {
+        return false;
+    }
+    $pListA = $listA->head->next;//listA 第一个节点
+    $pListB = $listB->head->next;//listB 第一个节点
+    $newList = new SingleLinkedList();
+    $newHead = $newList->head;
+    while($pListA != null && $pListB != null) {
+        if($pListA->data <= $pListB->data) {
+            $newRootNode->next = $pListA;
+            $pListA = $pListA->next;
+        } else {
+            $newRootNode->next = $pListB;
+            $pListB = $pListB->next;
+        }
+        $newRootNode = $newRootNode->next;
+        $newList->length++;
+    }
+    if($pListA != null) {
+        $newRootNode->next = $pListA;
+        $newList->length++;
+    }
+    if($pListB != null) {
+        $newRootNode->next = $pListB;
+        $newList->length++;
+    }
+    return $newList;
+}
+
 //======================TEST================================
 $list = new SingleLinkedList();
+$list1 = new SingleLinkedList();
+$list1->insertFoot(2);
+$list1->insertFoot(4);
+$list1->insertFoot(6);
 $list->insertFoot(1);
-$list->insertFoot(2);
 $list->insertFoot(3);
-$list->insertFoot(3);
-$list->insertFoot(2);
-$list->insertFoot(1);
+$list->insertFoot(5);
+$newList = mergeSortedList($list, $list1);
+var_dump($newList);exit;
 $check = checkHuiwen($list);
 var_dump($check);exit;
 //反转链表
