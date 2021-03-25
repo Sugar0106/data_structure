@@ -118,15 +118,40 @@ function findMiddle($list) {
     return $slow;
 }
 
+/**
+ *反转部分
+ */
+function reverseBetween($head, $m, $n) {
+    $du = new SingleLinkedListNode(0);
+    $du->next = $head;
+    $pre = $du;
+    for($i = 0; $i < $m-1; $i++) {
+        $pre = $pre->next;
+    }
+    //反转区第一个节点
+    $start = $pre->next;
+    $tail = $start->next;
+    for($i = 0; $i < $n-$m; $i++) {
+        $next = $start->next;
+        $start->next = $next->next;
+        $tail->next = $pre->next;
+        $pre->next = $tail;
+        $tail = $start->next;
+    }
+    var_dump($du->next);exit;
+    return $du->next;
+}
+
 //======================TEST================================
 $list = new SingleLinkedList();
 $list1 = new SingleLinkedList();
-$list1->insertFoot(2);
-$list1->insertFoot(4);
-$list1->insertFoot(6);
 $list->insertFoot(1);
+$list->insertFoot(2);
 $list->insertFoot(3);
+$list->insertFoot(4);
 $list->insertFoot(5);
+$list->insertFoot(6);
+reverseBetween($list->head->next, 3, 5);exit;
 var_dump(findMiddle($list));exit;
 $newList = mergeSortedList($list, $list1);
 var_dump($newList);exit;
